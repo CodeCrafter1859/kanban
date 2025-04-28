@@ -1,11 +1,10 @@
 import React from 'react'
-import Card from './components/Card'
+import Kanban from './Kanban'
 
 const App = () => {
   return (
     <div>
-      <h3>kanban</h3>
-      <Card/>
+      <Kanban/>
     </div>
   )
 }

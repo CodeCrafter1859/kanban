@@ -1,0 +1,43 @@
+.column {
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .column.to-do {
+    background-color: lightgreen;
+  }
+  
+  .column.in-progress {
+    background-color: lightyellow;
+  }
+  
+  .column.done {
+    background-color: lightblue;
+  }
+  
+  .column h4 {
+    text-align: center;
+    font-size: 18px;
+    color: black;
+    margin-bottom: 20px;
+  }
+  
+  @media (min-width: 768px) {
+    .column {
+      width: 45%;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .column {
+      width: 30%;
+    }
+  }
+  

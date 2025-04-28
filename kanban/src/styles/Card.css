@@ -70,10 +70,61 @@
     border: none;
     border-radius: 3px;
     padding: 5px;
-    margin-top: 3px;
+    margin-top: 5px;
     cursor: pointer;
   }
   
   button[type="submit"]:hover {
-    background-color: darkgrey; 
+    background-color: darkgrey;
   }
+  
+  /* Media query for tablets and smaller screens */
+  @media (max-width: 768px) {
+    .card-container {
+      max-width: 100%;
+      padding: 10px;
+    }
+  
+    input[type="text"] {
+      width: 60%;
+    }
+  
+    .btn-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .task-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    button[type="submit"] {
+      width: 100%; /* Full width for submit button */
+    }
+  }
+  
+  /* Media query for small screens (phones) */
+  @media (max-width: 480px) {
+    .card-container {
+      padding: 8px;
+    }
+  
+    input[type="text"] {
+      width: 100%;
+      font-size: 14px;
+    }
+  
+    .btn-container {
+      gap: 5px;
+    }
+  
+    button[type="submit"] {
+      padding: 8px;
+    }
+  
+    .task-container input {
+      font-size: 14px;
+    }
+  }
+  
