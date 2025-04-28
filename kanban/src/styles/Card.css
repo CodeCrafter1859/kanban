@@ -2,7 +2,7 @@
     padding: 15px;
     border: 1px solid lightgray;
     border-radius: 12px;
-    background-color: whitesmoke;
+    background-color: lightcyan;
     margin-bottom: 15px;
     max-width: 300px;
     width: 100%;
@@ -23,6 +23,7 @@
   }
   
   input[type="text"] {
+    background-color: white;
     border: 1px solid lightgray;
     border-radius: 8px;
     padding: 8px;
@@ -78,7 +79,6 @@
     background-color: darkgrey;
   }
   
-  /* Media query for tablets and smaller screens */
   @media (max-width: 768px) {
     .card-container {
       max-width: 100%;
@@ -126,5 +126,26 @@
     .task-container input {
       font-size: 14px;
     }
+  }
+
+  #choices {
+    margin-top: 10px;
+    width: 100px; 
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    background-color: white;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  #choices:focus {
+    border-color: mediumslateblue;
+    box-shadow: 0 0 5px rgba(123, 104, 238, 0.5); 
+  }
+  
+  #choices:hover{
+    background-color: lightgray;
   }
   

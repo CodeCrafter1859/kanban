@@ -1,27 +1,57 @@
-import React from 'react'
-import Column from './Column'
-import '../styles/Board.css'
-const Board = ({ board, columns, tasks, onUpdateTask, onDeleteTask, onDragStart }) => {
-  const boardColumns = columns.filter(column => column.boardId === board.id)
+import React, { useState } from "react";
+import Column from "./Column";
+import "../styles/Board.css";
+
+const Board = ({
+  title,
+  tasks,
+  onUpdateTask,
+  onDeleteTask,
+  onDragStart,
+}) => {
+  const [taskList, setTaskList] = useState(tasks);
+
+  const handleDeleteTask = (id) => {
+    const updatedTasks = taskList.filter((task) => task.id !== id);
+    setTaskList(updatedTasks);
+    if (onDeleteTask) onDeleteTask(id);
+  };
+
+  const handleUpdateTask = (id, taskName, description, status) => {
+    const updatedTasks = taskList.map((task) =>
+      task.id === id
+        ? { ...task, title: taskName, description: description, status: status }
+        : task
+    );
+    setTaskList(updatedTasks);
+    if (onUpdateTask) onUpdateTask(id, taskName, description, status);
+  };
+
+  const statuses = ["to-do", "in-progress", "done"];
 
   return (
     <div className="board-container">
-      <h3>KanBan Board</h3>
+      <h3>{title}</h3>
+      {/* <p>{description}</p> */}
 
       <div className="board">
-        {boardColumns.map((column) => (
-          <Column
-            key={column.id}                
-            column={column}                 
-            tasks={tasks}                  
-            onUpdateTask={onUpdateTask}     
-            onDeleteTask={onDeleteTask}     
-            onDragStart={onDragStart}       
-          />
-        ))}
+        {statuses.map((status) => {
+          const statusTasks = taskList.filter((task) => task.status === status);
+
+          return (
+            <Column
+              key={status}
+              status={status}
+              tasks={statusTasks}
+              onUpdateTask={handleUpdateTask}
+              onDeleteTask={handleDeleteTask}
+              onDragStart={onDragStart}
+            />
+          );
+        })}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Board
+export default Board;

@@ -1,35 +1,31 @@
 import React from 'react'
 import Board from './components/Board'
-import tasksData from './data/data.json'
+import tasks from './data/data.json'
 
 const Kanban = () => {
-  const onUpdateTask = (taskId) => {
-    console.log('Update task:', taskId)
-  }
+  const handleUpdateTask = (id, title, description, status) => {
+    console.log(`Updated task: ${id}, ${title}, ${description}, ${status}`);
+  };
 
-  const onDeleteTask = (taskId) => {
-    console.log('Delete task:', taskId)
-  }
+  const handleDeleteTask = (id) => {
+    console.log(`Deleted task with id: ${id}`);
+  };
 
-  const onDragStart = (taskId) => {
-    console.log('Drag start:', taskId)
-  }
+  const handleDragStart = (e) => {
+    console.log("Drag started for task:", e);
+  };
 
   return (
-    <div>
-      {tasksData.boards.map((board) => (
-        <Board
-          key={board.id}
-          board={board}
-          columns={tasksData.columns}
-          tasks={tasksData.tasks}
-          onUpdateTask={onUpdateTask}
-          onDeleteTask={onDeleteTask}
-          onDragStart={onDragStart}
-        />
-      ))}
+    <div className="App">
+      <Board
+        title="Kanban Board"
+        tasks={tasks}
+        onUpdateTask={handleUpdateTask}
+        onDeleteTask={handleDeleteTask}
+        onDragStart={handleDragStart}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default Kanban

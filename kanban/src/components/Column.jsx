@@ -1,27 +1,28 @@
 import React from "react";
 import Card from "./Card";
-import "../data/data.json";
-import '../styles/Column.css'
+import "../styles/Column.css";
 
-const Column = ({ column, tasks, onUpdateTask, onDeleteTask, onDragStart }) => {
-  const columnTasks = tasks.filter((task) => task.columnId === column.id);
-
+const Column = ({ status, tasks, onUpdateTask, onDeleteTask }) => {
   let columnClass = "";
-  if (column.name === "To Do") columnClass = "to-do";
-  if (column.name === "In Progress") columnClass = "in-progress";
-  if (column.name === "Done") columnClass = "done";
+  if (status === "to-do") columnClass = "to-do";
+  else if (status === "in-progress") columnClass = "in-progress";
+  else if (status === "done") columnClass = "done";
+
+  const columnTasks = tasks.filter((task) => task.status === status);
 
   return (
     <div className={`column ${columnClass}`}>
-      <h4>{column.name}</h4>
+      <h4>{status.toUpperCase()}</h4>
       <div className="tasks">
         {columnTasks.map((task) => (
           <Card
             key={task.id}
-            task={task}
+            id={task.id}
+            title={task.title}
+            desc={task.description}
+            status={task.status}
             onUpdate={onUpdateTask}
             onDelete={onDeleteTask}
-            onDragStart={onDragStart}
           />
         ))}
       </div>

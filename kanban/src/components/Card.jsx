@@ -1,52 +1,42 @@
 import React, { useState, useEffect } from "react";
-import "../styles/Card.css";
 import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
 import { ReactComponent as EditIcon } from "../assets/edit.svg";
+import "../styles/Card.css";
 
-const Card = ({ task, onUpdate, onDelete }) => {
-  const [taskName, setTaskName] = useState(task.title || "");
-  const [description, setDescription] = useState(task.description || "");
+const Card = ({ id, title, desc, status, onUpdate, onDelete }) => {
+  const [taskName, setTaskName] = useState(title || "title");
+  const [description, setDescription] = useState(desc || "desc");
   const [isEditing, setIsEditing] = useState(false);
-
+  const [taskStatus, setTaskStatus] = useState(status || "to-do"); 
   useEffect(() => {
-    setTaskName(task.title);
-    setDescription(task.description);
-  }, [task]);
+    setTaskName(title);
+    setDescription(desc);
+    setTaskStatus(status); 
+  }, [title, desc, status]);
 
-  const handleTaskNameChange = (e) => {
-    setTaskName(e.target.value);
-  };
+  const handleTaskNameChange = (e) => setTaskName(e.target.value);
 
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
+  const handleDescriptionChange = (e) => setDescription(e.target.value);
+
+  const handleStatusChange = (e) => setTaskStatus(e.target.value);
 
   const handleSaveChanges = () => {
-    onUpdate(task.id, taskName, description);
+    onUpdate(id, taskName, description, taskStatus); 
     setIsEditing(false);
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
+  const handleEditClick = () => setIsEditing(true);
 
-  const handleDeleteClick = () => {
-    onDelete(task.id);
-  };
-
-  const handleDragStart = (e) => {
-    e.dataTransfer.setData("taskId", task.id);
-  };
+  const handleDeleteClick = () => onDelete(id);
 
   return (
-    <div className="card-container" draggable onDragStart={handleDragStart}>
+    <div className="card-container">
       <div className="task-container">
         <input
           type="text"
-          placeholder="Enter task name"
           value={taskName}
           onChange={handleTaskNameChange}
-          disabled={!isEditing}
+          disabled={!isEditing} 
           required
         />
         <div className="btn-container">
@@ -61,16 +51,25 @@ const Card = ({ task, onUpdate, onDelete }) => {
       <div className="description-container">
         <input
           type="text"
-          placeholder="Enter task description"
           value={description}
           onChange={handleDescriptionChange}
-          disabled={!isEditing} required
+          disabled={!isEditing} 
+          required
         />
       </div>
+      <select
+      id="choices"
+        value={taskStatus}
+        onChange={handleStatusChange} 
+        disabled={!isEditing} 
+      >
+        <option value="to-do">To Do</option>
+        <option value="in-progress">In Progress</option>
+        <option value="done">Done</option>
+      </select>
+      <br />
       {isEditing && (
-        <button onClick={handleSaveChanges} type="submit">
-          Save
-        </button>
+        <button type="submit" onClick={handleSaveChanges}>Save</button>
       )}
     </div>
   );
