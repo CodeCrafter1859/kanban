@@ -2,7 +2,7 @@ import React from 'react'
 import Board from './components/Board'
 import tasksData from './data/data.json'
 
-const App = () => {
+const Kanban = () => {
   const onUpdateTask = (taskId) => {
     console.log('Update task:', taskId)
   }
@@ -32,4 +32,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Kanban

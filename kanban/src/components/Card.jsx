@@ -47,6 +47,7 @@ const Card = ({ task, onUpdate, onDelete }) => {
           value={taskName}
           onChange={handleTaskNameChange}
           disabled={!isEditing}
+          required
         />
         <div className="btn-container">
           <button onClick={handleDeleteClick}>
@@ -63,7 +64,7 @@ const Card = ({ task, onUpdate, onDelete }) => {
           placeholder="Enter task description"
           value={description}
           onChange={handleDescriptionChange}
-          disabled={!isEditing}
+          disabled={!isEditing} required
         />
       </div>
       {isEditing && (
