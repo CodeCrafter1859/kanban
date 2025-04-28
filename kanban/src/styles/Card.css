@@ -1,0 +1,79 @@
+.card-container {
+    padding: 15px;
+    border: 1px solid lightgray;
+    border-radius: 12px;
+    background-color: whitesmoke;
+    margin-bottom: 15px;
+    max-width: 300px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .card-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  }
+  
+  .task-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"] {
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    padding: 8px;
+    width: 70%;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  input[type="text"]:focus {
+    border-color: mediumslateblue;
+  }
+  
+  .btn-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  button:hover {
+    transform: scale(1.1);
+  }
+  
+  .delete-icon {
+    width: 22px;
+    height: 22px;
+    fill: firebrick;
+  }
+  
+  .edit-icon {
+    width: 22px;
+    height: 22px;
+    fill: goldenrod;
+  }
+  
+  button[type="submit"] {
+    background-color: grey;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+    margin-top: 3px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: darkgrey; 
+  }
