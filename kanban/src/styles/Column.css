@@ -41,3 +41,14 @@
     }
   }
   
+
+  .btn-icon{
+    max-width: 300px;
+    width: 100%;
+    background-color: whitesmoke;
+    border-radius: 10px;
+  }
+
+  .icon-plus{
+    color: blue;
+  }

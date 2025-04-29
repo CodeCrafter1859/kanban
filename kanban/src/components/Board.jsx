@@ -27,12 +27,15 @@ const Board = ({
     if (onUpdateTask) onUpdateTask(id, taskName, description, status);
   };
 
+  const handleAddTask = (newTask) => {
+    setTaskList((prevTasks) => [...prevTasks, newTask]);
+  };
+
   const statuses = ["to-do", "in-progress", "done"];
 
   return (
     <div className="board-container">
       <h3>{title}</h3>
-      {/* <p>{description}</p> */}
 
       <div className="board">
         {statuses.map((status) => {
@@ -45,6 +48,7 @@ const Board = ({
               tasks={statusTasks}
               onUpdateTask={handleUpdateTask}
               onDeleteTask={handleDeleteTask}
+              onAddTask={handleAddTask} 
               onDragStart={onDragStart}
             />
           );
