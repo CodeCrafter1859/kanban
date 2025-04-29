@@ -28,6 +28,12 @@
         "title": "Task 5: Bug Fixing in Dashboard",
         "description": "Fix bugs related to the dashboard's data visualization.",
         "status": "in-progress"
+    },
+    {
+        "id": 6,
+        "title": "Task 6: netflix clone",
+        "description": "done successfully.",
+        "status": "done"
     }
 ]
  

@@ -1,3 +1,7 @@
+/* body{ */
+  /* background-color: aquamarine; */
+/* } */
+
 .board-container {
   padding: 16px;
   background-color: aquamarine;
@@ -10,7 +14,7 @@ h3 {
 
 .board {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   overflow-x: auto;
   gap: 20px;
 }
