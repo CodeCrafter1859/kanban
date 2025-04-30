@@ -14,9 +14,10 @@ h3 {
 
 .board {
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
   overflow-x: auto;
-  gap: 20px;
+  gap: 10px;
 }
 
 .board-container h3{
