@@ -3,19 +3,28 @@ import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
 import { ReactComponent as EditIcon } from "../assets/edit.svg";
 import "../styles/Card.css";
 
-const Card = ({ id, title, desc, status, onUpdate, onDelete }) => {
-  const [taskName, setTaskName] = useState(title || "title");
-  const [description, setDescription] = useState(desc || "desc");
+const Card = ({
+  id,
+  title,
+  desc,
+  status,
+  isNew = false,
+  onUpdate,
+  onDelete,
+  onSave,
+  onCancel
+}) => {
+  const [taskName, setTaskName] = useState(title || "");
+  const [description, setDescription] = useState(desc || "");
   const [taskStatus, setTaskStatus] = useState(status || "to-do");
-
-  const [isEditing, setIsEditing] = useState(!title && !desc);
+  const [isEditing, setIsEditing] = useState(isNew);
 
   const titleInputRef = useRef(null);
 
   useEffect(() => {
-    setTaskName(title);
-    setDescription(desc);
-    setTaskStatus(status);
+    setTaskName(title || "");
+    setDescription(desc || "");
+    setTaskStatus(status || "to-do");
   }, [title, desc, status]);
 
   useEffect(() => {
@@ -29,12 +38,23 @@ const Card = ({ id, title, desc, status, onUpdate, onDelete }) => {
   const handleStatusChange = (e) => setTaskStatus(e.target.value);
 
   const handleSaveChanges = () => {
-    onUpdate(id, taskName, description, taskStatus);
+    if (!taskName.trim()) return;
+
+    if (isNew && onSave) {
+      onSave(taskName.trim(), description.trim(), taskStatus);
+    } else if (onUpdate) {
+      onUpdate(id, taskName.trim(), description.trim(), taskStatus);
+    }
+
     setIsEditing(false);
   };
 
   const handleEditClick = () => setIsEditing(true);
   const handleDeleteClick = () => onDelete(id);
+  const handleCancelClick = () => {
+    if (onCancel) onCancel();
+    else setIsEditing(false);
+  };
 
   return (
     <div className="card-container">
@@ -45,16 +65,18 @@ const Card = ({ id, title, desc, status, onUpdate, onDelete }) => {
           value={taskName}
           onChange={handleTaskNameChange}
           disabled={!isEditing}
-          required
+          placeholder="Task title"
         />
-        <div className="btn-container">
-          <button onClick={handleDeleteClick}>
-            <DeleteIcon className="delete-icon" />
-          </button>
-          <button onClick={handleEditClick}>
-            <EditIcon className="edit-icon" />
-          </button>
-        </div>
+        {!isNew && (
+          <div className="btn-container">
+            <button onClick={handleDeleteClick}>
+              <DeleteIcon className="delete-icon" />
+            </button>
+            <button onClick={handleEditClick}>
+              <EditIcon className="edit-icon" />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="description-container">
@@ -63,7 +85,7 @@ const Card = ({ id, title, desc, status, onUpdate, onDelete }) => {
           value={description}
           onChange={handleDescriptionChange}
           disabled={!isEditing}
-          required
+          placeholder="Description"
         />
       </div>
 
@@ -79,7 +101,10 @@ const Card = ({ id, title, desc, status, onUpdate, onDelete }) => {
       </select>
 
       {isEditing && (
-        <button type="submit" onClick={handleSaveChanges}>Save</button>
+        <div className="btn-save-cancel">
+          <button type="submit" onClick={handleSaveChanges}>Save</button>
+          {isNew && <button type="submit" onClick={handleCancelClick}>Cancel</button>}
+        </div>
       )}
     </div>
   );

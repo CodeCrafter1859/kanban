@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Column from "./Column";
 import "../styles/Board.css";
 
@@ -7,31 +7,37 @@ const Board = ({
   tasks,
   onUpdateTask,
   onDeleteTask,
-  onDragStart,
+  onAddTask
 }) => {
   const [taskList, setTaskList] = useState(tasks);
 
+  useEffect(() => {
+    console.log("Board received tasks from parent:", tasks);
+    setTaskList(tasks);
+  }, [tasks]);
+
   const handleDeleteTask = (id) => {
-    const updatedTasks = taskList.filter((task) => task.id !== id);
-    setTaskList(updatedTasks);
+    console.log(`Deleting task in Board: ${id}`);
     if (onDeleteTask) onDeleteTask(id);
   };
 
   const handleUpdateTask = (id, taskName, description, status) => {
-    const updatedTasks = taskList.map((task) =>
-      task.id === id
-        ? { ...task, title: taskName, description: description, status: status }
-        : task
-    );
-    setTaskList(updatedTasks);
+    console.log(`Updating task in Board: ${id}`, {
+      taskName,
+      description,
+      status
+    });
     if (onUpdateTask) onUpdateTask(id, taskName, description, status);
   };
 
   const handleAddTask = (newTask) => {
-    setTaskList((prevTasks) => [...prevTasks, newTask]);
+    console.log("Sending task to onAddTask handler:", newTask);
+    if (onAddTask) onAddTask(newTask);
   };
 
   const statuses = ["to-do", "in-progress", "done"];
+
+  console.log("Rendering Board with taskList:", taskList);
 
   return (
     <div className="board-container">
@@ -40,6 +46,7 @@ const Board = ({
       <div className="board">
         {statuses.map((status) => {
           const statusTasks = taskList.filter((task) => task.status === status);
+          console.log(`Rendering column '${status}' with tasks:`, statusTasks);
 
           return (
             <Column
@@ -48,8 +55,7 @@ const Board = ({
               tasks={statusTasks}
               onUpdateTask={handleUpdateTask}
               onDeleteTask={handleDeleteTask}
-              onAddTask={handleAddTask} 
-              onDragStart={onDragStart}
+              onAddTask={handleAddTask}
             />
           );
         })}

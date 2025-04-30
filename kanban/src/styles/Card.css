@@ -70,10 +70,15 @@
     border: none;
     border-radius: 3px;
     padding: 5px;
-    margin-left: 5px;
+    margin-top: 10px;
     cursor: pointer;
   }
   
+  .btn-save-cancel{
+    display: flex;
+    justify-content: space-between;
+  }
+
   button[type="submit"]:hover {
     background-color: darkgrey;
     transform: scale(1.1);
