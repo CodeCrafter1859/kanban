@@ -1,65 +1,48 @@
+
 import React, { useState, useEffect } from "react";
 import Column from "./Column";
 import "../styles/Board.css";
+import { DndContext } from "@dnd-kit/core";
 
-const Board = ({
-  title,
-  tasks,
-  onUpdateTask,
-  onDeleteTask,
-  onAddTask
-}) => {
+const Board = ({ title, tasks, onUpdateTask, onDeleteTask, onAddTask }) => {
   const [taskList, setTaskList] = useState(tasks);
 
   useEffect(() => {
-    console.log("Board received tasks from parent:", tasks);
     setTaskList(tasks);
   }, [tasks]);
 
-  const handleDeleteTask = (id) => {
-    console.log(`Deleting task in Board: ${id}`);
-    if (onDeleteTask) onDeleteTask(id);
-  };
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
 
-  const handleUpdateTask = (id, taskName, description, status) => {
-    console.log(`Updating task in Board: ${id}`, {
-      taskName,
-      description,
-      status
-    });
-    if (onUpdateTask) onUpdateTask(id, taskName, description, status);
-  };
+    if (!over || active.data.current.status === over.id) return;
 
-  const handleAddTask = (newTask) => {
-    console.log("Sending task to onAddTask handler:", newTask);
-    if (onAddTask) onAddTask(newTask);
+    const updatedTask = {
+      ...active.data.current,
+      status: over.id,
+    };
+
+    onUpdateTask(updatedTask.id, updatedTask.title, updatedTask.description, over.id);
   };
 
   const statuses = ["to-do", "in-progress", "done"];
 
-  console.log("Rendering Board with taskList:", taskList);
-
   return (
     <div className="board-container">
       <h3>{title}</h3>
-
-      <div className="board">
-        {statuses.map((status) => {
-          const statusTasks = taskList.filter((task) => task.status === status);
-          console.log(`Rendering column '${status}' with tasks:`, statusTasks);
-
-          return (
+      <DndContext onDragEnd={handleDragEnd}>
+        <div className="board">
+          {statuses.map((status) => (
             <Column
               key={status}
               status={status}
-              tasks={statusTasks}
-              onUpdateTask={handleUpdateTask}
-              onDeleteTask={handleDeleteTask}
-              onAddTask={handleAddTask}
+              tasks={taskList.filter((task) => task.status === status)}
+              onUpdateTask={onUpdateTask}
+              onDeleteTask={onDeleteTask}
+              onAddTask={onAddTask}
             />
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      </DndContext>
     </div>
   );
 };

@@ -1,15 +1,13 @@
+// Column.jsx
 import React, { useState } from "react";
 import Card from "./Card";
 import "../styles/Column.css";
+import { useDroppable } from "@dnd-kit/core";
 import { ReactComponent as PlusIcon } from "../assets/plusIcon.svg";
 
 const Column = ({ status, tasks, onUpdateTask, onDeleteTask, onAddTask }) => {
   const [addingNew, setAddingNew] = useState(false);
-
-  let columnClass = "";
-  if (status === "to-do") columnClass = "to-do";
-  else if (status === "in-progress") columnClass = "in-progress";
-  else if (status === "done") columnClass = "done";
+  const { setNodeRef, isOver } = useDroppable({ id: status });
 
   const handleSaveNewTask = (title, description) => {
     if (!title.trim()) {
@@ -23,17 +21,14 @@ const Column = ({ status, tasks, onUpdateTask, onDeleteTask, onAddTask }) => {
       status,
     };
 
-    console.log("Sending new task to parent:", newTask);
     onAddTask(newTask);
     setAddingNew(false);
   };
 
-  const handleCancelNewTask = () => {
-    setAddingNew(false);
-  };
+  const columnStyle = isOver ? { background: "#e0ffe0" } : {};
 
   return (
-    <div className={`column ${columnClass}`}>
+    <div className={`column ${status}`} ref={setNodeRef} style={columnStyle}>
       <h4>{status.toUpperCase()}</h4>
       <div className="tasks">
         {tasks.map((task) => (
@@ -55,7 +50,7 @@ const Column = ({ status, tasks, onUpdateTask, onDeleteTask, onAddTask }) => {
             desc=""
             status={status}
             onSave={handleSaveNewTask}
-            onCancel={handleCancelNewTask}
+            onCancel={() => setAddingNew(false)}
           />
         )}
       </div>

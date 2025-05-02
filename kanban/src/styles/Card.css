@@ -154,3 +154,10 @@
     background-color: lightgray;
   }
   
+  .drag-handle {
+    cursor: grab;
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 4px;
+  }
+  

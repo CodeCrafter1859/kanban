@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDraggable } from "@dnd-kit/core";
 import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
 import { ReactComponent as EditIcon } from "../assets/edit.svg";
 import "../styles/Card.css";
@@ -33,6 +34,26 @@ const Card = ({
     }
   }, [isEditing]);
 
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: id,
+    data: {
+      id,
+      title,
+      description: desc,
+      status
+    },
+  });
+
+  const style = {
+    transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
+    padding: "8px",
+    margin: "8px 0",
+    background: "#fff",
+    border: "1px solid #ccc",
+    borderRadius: "6px",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+  };
+
   const handleTaskNameChange = (e) => setTaskName(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
   const handleStatusChange = (e) => setTaskStatus(e.target.value);
@@ -57,7 +78,11 @@ const Card = ({
   };
 
   return (
-    <div className="card-container">
+    <div className="card-container" ref={setNodeRef} style={style}>
+      <div className="drag-handle" {...attributes} {...listeners}>
+        <strong>:: Drag</strong>
+      </div>
+
       <div className="task-container">
         <input
           ref={titleInputRef}
